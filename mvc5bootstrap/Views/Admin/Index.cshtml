@@ -1,0 +1,78 @@
+﻿@model  mvc5bootstrap.Models.PlayerViewModel
+@{
+    ViewBag.Title = "Players";
+    Layout = null;
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<div class="container" style="width:50%;margin-top:auto">
+    <table class="table" style="text-align:center;width:auto;height:auto">
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+        </tr>
+        <tbody>
+            @foreach (var item in ViewBag.Players)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.SurName</td>
+                    <td>@item.Age</td>
+                    <td>
+                        <a href="#" class="btn btn-success" onclick="Edit(@item.PlayerID)">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-success" onclick="Delete(@item.PlayerID)">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="#" class="btn btn-primary" onclick="Edit(0)">Add Player</a>
+
+    <div class="modal fade" id="MyModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h3 class="modal-title">Edit</h3>
+                </div>
+                <div class="modal-body" id="ModalBody">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="MyModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h3 class="modal-title">Delete</h3>
+                </div>
+                <div class="modal-body" id="ModalBody1">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var Edit=function(playerId){
+        var url="/Admin/Edit?playerId="+playerId;
+        $("#ModalBody").load(url,function(){
+            $("#MyModal").modal("show");
+        })
+    }
+    var Delete = function(playerId)
+    {
+        var url="/Admin/Delete?id="+playerId;
+        $("#ModalBody1").load(url,function(){
+            $("#MyModal1").modal("show");
+        })
+    }
+</script>

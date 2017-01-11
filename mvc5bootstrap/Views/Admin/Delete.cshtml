@@ -1,0 +1,28 @@
+﻿@model mvc5bootstrap.Models.Player
+<div>
+    <form id="Form1">
+        @Html.HiddenFor(m => m.PLayerID)        
+        @Html.TextBoxFor(m=>m.Name, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.SurName, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Age, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Team.Name, new { @class = "form-control" })
+        <a href="#" id="btn1" class="btn btn-success btn-block">Delete</a>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btn1").click(function () {
+            var formdata = $("#Form1").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Delete",
+                data: formdata,
+                success: function () {
+                    $("#MyModal1").modal("hide");
+                    window.location.href = "/Admin/Index";
+                }
+            })
+        })
+    })
+</script>

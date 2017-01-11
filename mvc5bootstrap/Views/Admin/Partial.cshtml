@@ -1,0 +1,34 @@
+﻿@model  mvc5bootstrap.Models.PlayerViewModel
+<div>
+    <form id="myForm">
+        @Html.HiddenFor(m => m.PlayerID)
+        @Html.DropDownListFor(model => model.TeamID, ViewBag.Teams as SelectList, "select Team", new { @class = "form-control" })
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @placeholder = "Name" })
+        @Html.TextBoxFor(model => model.SurName, new { @class = "form-control", @placeholder = "Surname" })
+        @Html.TextBoxFor(model => model.Age, new { @class = "form-control", @placeholder = "Age" })
+        <a href="#" id="btnSubmit" class="btn btn-success btn-block">Save</a>
+</form>
+<div style="text-align:center;display:none" id="loader">
+    <img src="~/Content/loading.jpg" width="150" />
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            $("#loader").show();
+            var formdata = $("#myForm").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Index",
+                data: formdata,
+                success: function () {
+                    $("#loader").hide();
+                    $("#MyModal").modal("hide");
+                    window.location.href = "/Admin/Index";
+                }
+            })
+        })
+    })
+</script>
+
+
